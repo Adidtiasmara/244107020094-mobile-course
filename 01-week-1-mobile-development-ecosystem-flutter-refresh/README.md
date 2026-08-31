@@ -1,31 +1,14 @@
 # 01 Week 1 Mobile Development Ecosystem & Flutter Refresh
 
-Dokumentasi hasil pengerjaan Week 1.
+Dokumentasi hasil pengerjaan Praktikum Pemrograman Mobile Minggu ke-1.
+Dokumentasi ini telah berisi: Screenshot,penjelasan, dan jawaban dan pertanyaan dari Praktikum.
 
 ## Latihan Mandiri
 
-Tugas:
 1. Buat fungsi `hitungLuasPersegiPanjang(double panjang, double lebar)` yang mengembalikan luas.
 2. Buat kelas `Profil` dengan properti `nama`, `nim`, dan `email` (boleh null/empty).
 3. Panggil keduanya dari `main()` dan tangani kondisi email kosong dengan aman.
 
-Contoh singkat (Dart):
-```dart
-double hitungLuasPersegiPanjang(double p, double l) => p * l;
-
-class Profil {
-	final String nama;
-	final String nim;
-	final String? email;
-
-	Profil({required this.nama, required this.nim, this.email});
-}
-
-void main() {
-	final profil = Profil(nama: 'Budi', nim: '244107020094');
-	print('Nama: ${profil.nama}, NIM: ${profil.nim}, Email: ${profil.email ?? "(kosong)"}');
-}
-```
 
 ![Latihan Mandiri](screenshots/LatihanMandiri.png)
 
@@ -50,7 +33,7 @@ Penjelasan singkat:
 	- Hot restart: Memulai ulang aplikasi sepenuhnya, dan memuat ulang seluruh kode. Efektif difunakan apabila perubahan memerlukan inisialisasi ulang.
 
 - [x] Repository remote berisi source code, README, screenshot, dan riwayat commit.
-
+---
 ### Mini Assignment
 Buat aplikasi Profil Mahasiswa berdasarkan praktikum. Tambahkan NIM dan satu informasi tambahan menggunakan widget dasar. 
 
