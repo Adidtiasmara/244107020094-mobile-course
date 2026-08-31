@@ -1,0 +1,46 @@
+# Flutter/Dart related
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+/.dart_tool/
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/build/
+
+# IDEs and editors
+/.idea/
+*.iml
+/.vscode/
+
+# OS files
+.DS_Store
+
+# Android
+/.gradle
+/local.properties
+/android/.gradle
+**/gradle-wrapper.jar
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+
+# macOS
+macos/Flutter/ephemeral/
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Misc
+/coverage/
+*.log
+*.tmp
+*.temp
+
+# Keep pubspec files tracked
+!pubspec.yaml
+!pubspec.lock
