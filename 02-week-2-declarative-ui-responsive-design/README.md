@@ -129,6 +129,32 @@ Hasil Implementasi
       >
       <br><br>
       Dua kolom
-    </td>
+    </td>  
   </tr>
 </table>
+
+## Refleksi
+
+### 1. Perbedaan Imperative dan Declarative
+
+Menurut saya, imperative adalah cara membuat UI dengan memberikan perintah satu per satu. Speerti menentukan kapan tampilan harus dibuat atau diubah.
+
+Sedangkan declarative lebih berfokus pada hasil tampilan  berdasarkan kondisi tertentu. Di Flutter, ketika nilai state berubah maka tampilan akan menyesuaikan secara otomatis. Contohnya, saat nilai `isDark` berubah, tema aplikasi ikut berubah.
+
+### 2. Penggunaan Expanded
+
+`Expanded` membantu ketika digunakan di dalam `Row` atau `Column` untuk membagi ruang yang tersedia. Pada dashboard, `Expanded` digunakan agar judul kartu tidak tembus ke luar layar.
+
+Namun, `Expanded` bisa menyebabkan error jika digunakan pada ruang yang tidak memiliki batas ukuran yang jelas. Contohnya adalah `Row` di dalam scroll horizontal. Overflow juga bisa terjadi jika ada widget lain yang memiliki ukuran tetap terlalu besar. 
+
+### 3. Pengaruh Breakpoint dan Theme
+
+Breakpoint menentukan perubahan susunan layout berdasarkan ukuran layar. Pada aplikasi ini, layar sempit menggunakan satu kolom, sedangkan layar lebar menggunakan dua kolom. Hal ini membuat kartu tetap mudah dibaca dan tidak terlalu sempit.
+
+Theme juga memengaruhi kenyamanan pengguna. Light theme lebih cocok digunakan pada kondisi terang, sedangkan dark theme dapat digunakan pada kondisi yang lebih gelap. Warna teks dan latar belakang harus tetap memiliki kontras agar tulisan bisa dibaca pada kedua tema.
+
+### 4. Verifikasi Rekomendasi AI
+
+Setelah tugas utama selesai, saya membandingkan layout `GridView` dengan `LayoutBuilder + Column`. Saya mencoba keduanya pada layar sempit dan layar lebar untuk melihat perubahan jumlah kolom.
+
+Saya juga memeriksa apakah penggunaan `Expanded` menyebabkan overflow, mencoba toggle light theme dan dark theme, serta memastikan label `Semantics` terdapat pada switch tema dan kartu informasi. Selain itu, aplikasi dijalankan pada beberapa ukuran layar untuk memastikan tampilannya tetap responsif.
