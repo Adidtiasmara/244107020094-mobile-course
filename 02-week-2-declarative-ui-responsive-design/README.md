@@ -133,6 +133,22 @@ Hasil Implementasi
   </tr>
 </table>
 
+### Hasil
+<table>
+  <tr>
+    <td align="center">
+      <strong>Hasil Test</strong><br><br>
+      <img
+        src="screenshots/test.jpeg"
+        width="600"
+        alt="TestResult"
+      >
+      <br><br>
+      Semua Tes Berhasil
+    </td>
+  </tr>
+</table>
+
 ## Refleksi
 
 ### 1. Perbedaan Imperative dan Declarative
