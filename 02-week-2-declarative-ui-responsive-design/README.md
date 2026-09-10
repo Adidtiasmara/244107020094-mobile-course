@@ -174,3 +174,22 @@ Theme juga memengaruhi kenyamanan pengguna. Light theme lebih cocok digunakan pa
 Setelah tugas utama selesai, saya membandingkan layout `GridView` dengan `LayoutBuilder + Column`. Saya mencoba keduanya pada layar sempit dan layar lebar untuk melihat perubahan jumlah kolom.
 
 Saya juga memeriksa apakah penggunaan `Expanded` menyebabkan overflow, mencoba toggle light theme dan dark theme, serta memastikan label `Semantics` terdapat pada switch tema dan kartu informasi. Selain itu, aplikasi dijalankan pada beberapa ukuran layar untuk memastikan tampilannya tetap responsif.
+
+## Checklist Verifikasi
+
+- [ ] `flutter analyze` tidak menghasilkan error.
+- [ ] `flutter test` berhasil dijalankan dan semua widget test responsif lulus.
+- [ ] Aplikasi berhasil dijalankan pada ukuran layar sempit.
+- [ ] Aplikasi berhasil dijalankan pada ukuran layar lebar.
+- [ ] Tampilan berubah menjadi satu kolom pada layar sempit.
+- [ ] Tampilan berubah menjadi dua kolom pada layar lebar.
+- [ ] Dark mode memiliki kontras warna yang baik.
+- [ ] Teks tetap terbaca pada light theme dan dark theme.
+- [ ] Toggle tema dapat digunakan untuk berpindah antara light theme dan dark theme.
+- [ ] Label aksesibilitas pada informasi dan tombol penting dapat dijelaskan.
+- [ ] Struktur widget dapat dijelaskan saat code review.
+- [ ] Screenshot layar sempit sudah tersimpan di folder `screenshots/`.
+- [ ] Screenshot layar lebar sudah tersimpan di folder `screenshots/`.
+- [ ] Folder `test/` sudah tersimpan pada folder tugas Week 2.
+- [ ] File `README.md` sudah tersimpan pada folder tugas Week 2.
+- [ ] Semua file tugas Week 2 sudah diperiksa sebelum dikumpulkan.
