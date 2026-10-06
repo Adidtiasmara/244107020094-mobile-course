@@ -1,0 +1,9 @@
+* text=auto
+
+# Folder platform bawaan Flutter tidak dihitung sebagai kode proyek,
+# supaya statistik bahasa GitHub didominasi Dart.
+**/windows/** linguist-vendored
+**/linux/** linguist-vendored
+**/macos/** linguist-vendored
+**/ios/** linguist-vendored
+**/android/** linguist-vendored
