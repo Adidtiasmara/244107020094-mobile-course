@@ -33,7 +33,7 @@ Repositori ini memuat dokumentasi praktikum, latihan mingguan, dan proyek perkul
 | :---: | :--- | :---: | :--- |
 | **01** | Mobile Development Ecosystem & Flutter Refresh | Selesai | [`01-week-1-...`](./01-week-1-mobile-development-ecosystem-flutter-refresh/) |
 | **02** | Declarative UI & Responsive Design | On Progress | [`02-week-2-...`](./02-week-2-declarative-ui-responsive-design/) |
-| **03** | Navigation & State Management (Riverpod) | Pending | [`03-week-3-...`](./03-week-3-navigation-state-management/) |
+| **03** | Navigation & State Management (Riverpod) | Selesai | [`03-week-3-...`](./03-week-3-navigation-state-management/) |
 | **04** | Networking & REST API | Pending | [`04-week-4-...`](./04-week-4-networking-rest-api/) |
 | **05** | Local Storage & Offline-First | Pending | [`05-week-5-...`](./05-week-5-local-storage-offline-first/) |
 | **06** | Authentication, Security & FCM | Pending | [`06-week-6-...`](./06-week-6-authentication-security-fcm/) |

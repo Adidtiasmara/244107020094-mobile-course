@@ -1,3 +1,5 @@
 02-week-2-declarative-ui-responsive-design/responsive_dashboard/
-03-week-3-navigation-state-management/week3_navigation/
-03-week-3-navigation-state-management/week3_todo/
+03-week-3-navigation-state-management/week3_navigation/*
+!03-week-3-navigation-state-management/week3_navigation/README.md
+03-week-3-navigation-state-management/week3_todo/*
+!03-week-3-navigation-state-management/week3_todo/README.md
