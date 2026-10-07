@@ -6,7 +6,7 @@ dan bahasa Dart.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
-[![Progress](https://img.shields.io/badge/progres-minggu%201--4%20dari%2016-informational)]()
+[![Progress](https://img.shields.io/badge/progres-minggu%201--5%20dari%2016-informational)]()
 
 ## Identitas
 
@@ -25,7 +25,7 @@ dan bahasa Dart.
 | 02 | Declarative UI & Responsive Design | Selesai | [`02-...`](./02-week-2-declarative-ui-responsive-design/) |
 | 03 | Navigation & State Management (Riverpod) | Selesai | [`03-...`](./03-week-3-navigation-state-management/) |
 | 04 | Networking & REST API | Selesai | [`04-...`](./04-week-4-networking-rest-api/) |
-| 05 | Local Storage & Offline-First | Belum mulai | [`05-...`](./05-week-5-local-storage-offline-first/) |
+| 05 | Local Storage & Offline-First | Selesai | [`05-...`](./05-week-5-local-storage-offline-first/) |
 | 06 | Authentication, Security & FCM | Belum mulai | [`06-...`](./06-week-6-authentication-security-fcm/) |
 | 07 | Clean Architecture | Belum mulai | [`07-...`](./07-week-7-clean-architecture/) |
 | 08 | Mid Project Review & Code Review | Belum mulai | [`08-...`](./08-week-8-mid-project-review/) |
@@ -83,6 +83,18 @@ Detail: [`03-.../README.md`](./03-week-3-navigation-state-management/README.md)
 - `dart analyze` bersih dan 10 test lulus (unit, provider palsu, widget).
 
 Detail: [`04-.../README.md`](./04-week-4-networking-rest-api/README.md)
+
+### Minggu 5 — Local Storage & Offline-First
+- Preferensi tema gelap/terang + waktu terakhir dibuka dengan
+  `SharedPreferences` melalui `PrefsRepository`.
+- CRUD catatan persisten dengan SQLite (`sqflite`) melalui `NoteRepository` +
+  Riverpod, diurutkan `updated_at` terbaru.
+- Pola offline-first: cache-first read (`cached_posts`), dirty flag, dan
+  `syncNotes` dengan aturan konflik last-write-wins.
+- Halaman detail `/note/:id` dengan GoRouter membaca dari repository lokal.
+- `dart analyze` bersih dan 7 test lulus (model, provider palsu, widget).
+
+Detail: [`05-.../README.md`](./05-week-5-local-storage-offline-first/README.md)
 
 ## Cara Menjalankan
 
