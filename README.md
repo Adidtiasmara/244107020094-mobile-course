@@ -24,7 +24,7 @@ dan bahasa Dart.
 | 01 | Mobile Development Ecosystem & Flutter Refresh | Selesai | [`01-...`](./01-week-1-mobile-development-ecosystem-flutter-refresh/) |
 | 02 | Declarative UI & Responsive Design | Selesai | [`02-...`](./02-week-2-declarative-ui-responsive-design/) |
 | 03 | Navigation & State Management (Riverpod) | Selesai | [`03-...`](./03-week-3-navigation-state-management/) |
-| 04 | Networking & REST API | Sedang dikerjakan | [`04-...`](./04-week-4-networking-rest-api/) |
+| 04 | Networking & REST API | Selesai | [`04-...`](./04-week-4-networking-rest-api/) |
 | 05 | Local Storage & Offline-First | Belum mulai | [`05-...`](./05-week-5-local-storage-offline-first/) |
 | 06 | Authentication, Security & FCM | Belum mulai | [`06-...`](./06-week-6-authentication-security-fcm/) |
 | 07 | Clean Architecture | Belum mulai | [`07-...`](./07-week-7-clean-architecture/) |
@@ -72,11 +72,15 @@ Detail: [`02-.../README.md`](./02-week-2-declarative-ui-responsive-design/README
 
 Detail: [`03-.../README.md`](./03-week-3-navigation-state-management/README.md)
 
-## Sedang Dikerjakan
-
 ### Minggu 4 — Networking & REST API
-- Klien HTTP memakai `dio`, model `Post`, repository, dan provider Riverpod.
-- Halaman daftar post beserta pagination.
+- Klien HTTP terpusat `dio` (base URL, timeout 10 detik, interceptor) dan model
+  `Post`/`Comment` dengan `fromJson` aman null.
+- Repository pattern: UI hanya membaca provider, tidak pernah memanggil Dio
+  langsung.
+- Empat state UI: loading, error (+ tombol Coba lagi), empty, dan success.
+- Pagination infinite scroll 10 item per halaman dengan guard request ganda.
+- Halaman detail `/post/:id` dengan GoRouter dan daftar komentar.
+- `dart analyze` bersih dan 10 test lulus (unit, provider palsu, widget).
 
 Detail: [`04-.../README.md`](./04-week-4-networking-rest-api/README.md)
 
