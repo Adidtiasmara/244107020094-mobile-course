@@ -2,13 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import 'api_client.dart';
+import 'models/comment.dart';
 import 'models/post.dart';
+import 'repositories/comment_repository.dart';
 import 'repositories/post_repository.dart';
 
 final dioProvider = Provider<Dio>((ref) => createDio());
 
 final postRepositoryProvider = Provider<PostRepository>(
   (ref) => PostRepository(ref.watch(dioProvider)),
+);
+
+final commentRepositoryProvider = Provider<CommentRepository>(
+  (ref) => CommentRepository(ref.watch(dioProvider)),
 );
 
 class PostListNotifier extends AsyncNotifier<List<Post>> {
@@ -37,6 +43,40 @@ final postListProvider =
         // Nonaktifkan retry otomatis Riverpod 3 agar error langsung
         // final dan mudah diuji (tanpa ini, future provider di-test
         // akan me-retry dan menggantung).
+        retry: (retryCount, error) => null);
+
+/// Detail satu post. Dipakai halaman detail saat post belum ada di cache
+/// daftar (misalnya halaman dibuka langsung lewat `/post/:id`).
+final postDetailProvider = FutureProvider.family<Post, int>((ref, id) {
+  final repository = ref.watch(postRepositoryProvider);
+  return repository.fetchPost(id);
+});
+
+class CommentsNotifier extends AsyncNotifier<List<Comment>> {
+  CommentsNotifier(this.postId);
+
+  final int postId;
+
+  @override
+  Future<List<Comment>> build() async {
+    final repository = ref.watch(commentRepositoryProvider);
+    return repository.fetchComments(postId);
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    try {
+      final repository = ref.read(commentRepositoryProvider);
+      state = AsyncData(await repository.fetchComments(postId));
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
+  }
+}
+
+final commentsProvider =
+    AsyncNotifierProvider.family<CommentsNotifier, List<Comment>, int>(
+        CommentsNotifier.new,
         retry: (retryCount, error) => null);
 
 /// Helper khusus testing (letakkan di providers.dart): membaca state
@@ -72,27 +112,4 @@ Future<Object?> readPostsErrorOnce(ProviderContainer container) {
     fireImmediately: true,
   );
   return completer.future.whenComplete(sub.close);
-}
-
-String friendlyErrorMessage(Object error) {
-  if (error is DioException) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return 'Koneksi lambat atau timeout. Periksa internet Anda lalu coba lagi.';
-      case DioExceptionType.connectionError:
-        return 'Tidak dapat terhubung ke server. Periksa internet Anda.';
-      case DioExceptionType.badResponse:
-        final code = error.response?.statusCode;
-        if (code == 404) return 'Data tidak ditemukan (404).';
-        if (code == 401 || code == 403) {
-          return 'Akses ditolak ($code). Periksa kredensial Anda.';
-        }
-        return 'Server bermasalah ($code). Coba lagi nanti.';
-      default:
-        return 'Terjadi kesalahan jaringan. Coba lagi.';
-    }
-  }
-  return 'Terjadi kesalahan tak terduga: $error';
 }

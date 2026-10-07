@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:week4_api/data/models/post.dart';
+import 'package:week4_api/data/providers.dart';
+import 'package:week4_api/pages/paged_post_page.dart';
+import 'package:week4_api/widgets/post_tile.dart';
 
-import 'package:week4_api/main.dart';
+import 'fakes.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('PostTile menampilkan judul, isi, dan id post',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: PostTile(
+            post: Post(userId: 1, id: 5, title: 'Judul', body: 'Isi'),
+          ),
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Judul'), findsOneWidget);
+    expect(find.text('Isi'), findsOneWidget);
+    expect(find.text('5'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('PagedPostPage menampilkan data dari repository palsu',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          postRepositoryProvider.overrideWithValue(
+            FakePostRepository(items: const [
+              Post(userId: 1, id: 1, title: 'Judul Pertama', body: 'Isi'),
+            ]),
+          ),
+        ],
+        child: const MaterialApp(home: PagedPostPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Judul Pertama'), findsOneWidget);
+    expect(find.text('Semua data termuat.'), findsOneWidget);
   });
 }

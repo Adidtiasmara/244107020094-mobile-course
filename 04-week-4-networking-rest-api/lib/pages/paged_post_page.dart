@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../data/network_errors.dart';
 import '../data/paged_post.dart';
-import '../data/providers.dart';
+import '../widgets/post_tile.dart';
 
 class PagedPostPage extends ConsumerStatefulWidget {
   const PagedPostPage({super.key});
@@ -56,7 +58,16 @@ class _PagedPostPageState
       );
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Posts Paged')),
+      appBar: AppBar(
+        title: const Text('Posts Paged'),
+        actions: [
+          IconButton(
+            tooltip: 'Daftar penuh',
+            icon: const Icon(Icons.view_list),
+            onPressed: () => context.push('/simple'),
+          ),
+        ],
+      ),
       body: ListView.builder(
         controller: _controller,
         itemCount: state.items.length + 1,
@@ -75,11 +86,11 @@ class _PagedPostPageState
             );
           }
           final post = state.items[index];
-          return ListTile(
-            leading: CircleAvatar(
-                child: Text(post.id.toString())),
-            title: Text(post.title,
-                maxLines: 1, overflow: TextOverflow.ellipsis),
+          return PostTile(
+            post: post,
+            showBody: false,
+            onTap: () =>
+                context.push('/post/${post.id}', extra: post),
           );
         },
       ),
