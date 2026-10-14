@@ -170,8 +170,8 @@ perangkat. Pesan memakai payload gabungan `notification + data` di atas.
 | State | Handler | Yang diharapkan | Bukti |
 | :--- | :--- | :--- | :--- |
 | Foreground | `onMessage` | Banner lokal manual muncul, ketukan masuk `/pengumuman/3` | [08-foreground.png](screenshots/08-foreground.png) |
-| Background | `onMessageOpenedApp` | Banner sistem, ketukan masuk `/pengumuman/3` | [09-background.png](screenshots/09-background.png) |
-| Terminated | `getInitialMessage` | Aplikasi terbuka langsung ke `/pengumuman/3` | [10-terminated.png](screenshots/10-terminated.png) |
+| Background | `onMessageOpenedApp` | Banner sistem, ketukan masuk `/pengumuman/3` | [09-background.png](screenshots/08-background.png) |
+
 
 > Catatan pengujian: untuk state **terminated**, aplikasi dimatikan lewat
 > recent-apps/`am kill`. Jangan pakai `adb shell am force-stop` karena Android
@@ -223,30 +223,6 @@ flutter test --concurrency=1
 Hasil:
 
 ```text
-$ flutter analyze
-Analyzing campus_notify...
-No issues found! (ran in 7.2s)
-
-$ flutter test --concurrency=1
-+ : test/auth_push_test.dart: routeFromMessage menangani route kosong dan tanpa garis miring
-+ : test/auth_push_test.dart: routeFromMessage mengabaikan spasi di sekitar route
-+ : test/auth_push_test.dart: announcementIdFromMessage mengambil id dari field id
-+ : test/auth_push_test.dart: announcementIdFromMessage jatuh ke segmen terakhir rute bila id tidak ada
-+ : test/auth_push_test.dart: announcementIdFromMessage mengembalikan null untuk payload beranda
-+ : test/auth_push_test.dart: maskToken menyisakan 12 karakter pertama lalu elipsis
-+ : test/auth_push_test.dart: maskToken tidak memotong token yang lebih pendek dari batas
-+ : test/auth_push_test.dart: AuthRepository login menolak email tanpa @
-+ : test/auth_push_test.dart: AuthRepository login menolak kata sandi pendek
-+ : test/auth_push_test.dart: AuthRepository login menolak kata sandi yang salah
-+ : test/auth_push_test.dart: AuthRepository login sukses mengembalikan pasangan access dan refresh
-+ : test/auth_push_test.dart: AuthRepository refresh gagal bila refresh token kosong
-+ : test/auth_push_test.dart: AuthRepository refresh sukses mengembalikan access token baru
-+ : test/auth_push_test.dart: AuthNotifier status login dibaca dari keberadaan access token
-+ : test/auth_push_test.dart: AuthNotifier login menyimpan token dan menandai status login
-+ : test/auth_push_test.dart: AuthNotifier login gagal tidak menyimpan token
-+ : test/auth_push_test.dart: AuthNotifier logout membersihkan token dan memaksa login ulang
-+ : All tests passed!
-```
 
 <p align="center">
   <img src="screenshots/11-analyze-test.png" width="360" alt="flutter analyze dan flutter test">
