@@ -39,50 +39,6 @@ error, empty, dan success, ditutup dengan pagination (infinite scroll).
 - `go_router` ^18
 - `flutter_test` untuk unit dan widget test
 
-## Struktur Folder
-
-```text
-04-week-4-networking-rest-api/
-├── week4_api/                 # Project Flutter yang dapat dijalankan
-│   ├── lib/
-│   │   ├── main.dart          # ProviderScope + GoRouter (/ , /simple, /post/:id)
-│   │   ├── data/
-│   │   │   ├── api_client.dart          # createDio() terpusat
-│   │   │   ├── providers.dart           # dioProvider, repository, notifier
-│   │   │   ├── paged_post.dart          # PagedPostsState + notifier
-│   │   │   ├── network_errors.dart      # friendlyErrorMessage
-│   │   │   ├── models/ (post.dart, comment.dart)
-│   │   │   └── repositories/ (post_repository.dart, comment_repository.dart)
-│   │   ├── pages/ (post_list_page.dart, paged_post_page.dart, post_detail_page.dart)
-│   │   └── widgets/post_tile.dart
-│   └── test/
-│       ├── post_test.dart     # fromJson, error mapping, provider sukses/gagal
-│       ├── comment_test.dart  # Comment.fromJson + 404 + provider komentar
-│       ├── widget_test.dart   # PostTile & PagedPostPage
-│       └── fakes.dart         # repository palsu (tanpa HTTP)
-├── lib/                       # Salinan kode final (untuk portofolio)
-├── test/                      # Salinan test final (untuk portofolio)
-├── docs/
-│   └── ai-challenge.md        # Prompt, output AI, perbaikan, hasil test
-├── screenshots/
-└── README.md
-```
-
-> Kode yang dapat dijalankan ada di subfolder `week4_api/` (di-ignore oleh Git).
-> Folder `lib/` dan `test/` di root berisi salinan final untuk dokumentasi
-> portofolio, mengikuti konvensi minggu sebelumnya.
-
-## Alur Data
-
-```text
-UI (ConsumerWidget) --watch--> Provider (AsyncValue)
-Provider --panggil--> Repository --pakai--> Dio --HTTP--> REST API
-```
-
-UI tidak pernah memanggil Dio langsung. Repository mengubah exception jaringan
-menjadi kegagalan yang bermakna bagi pengguna lewat `friendlyErrorMessage`,
-dan provider mengekspos `AsyncValue` ke UI.
-
 ## 1. Model data dengan `fromJson` aman null
 
 `Post` dan `Comment` memakai cast defensif `as String? ?? ''` dan
@@ -163,37 +119,6 @@ Detail prompt, output awal AI, verifikasi, dan perbaikan ada di
    lengkap, dengan state detail dari list yang sudah dimuat atau via repository
    bila dibuka langsung.
 
-## Testing
-
-```bash
-cd week4_api
-dart analyze
-flutter test
-```
-
-Hasil:
-
-```text
-Analyzing week4_api...
-No issues found!
-
-00:00 +0: loading test/widget_test.dart
-00:00 +0: test/comment_test.dart: Comment.fromJson aman terhadap field yang hilang
-00:00 +1: test/post_test.dart: fromJson aman terhadap field yang hilang
-00:00 +2: test/widget_test.dart: PostTile menampilkan judul, isi, dan id post
-...
-00:01 +9: test/widget_test.dart: PagedPostPage menampilkan data dari repository palsu
-00:02 +10: All tests passed!
-```
-
-<table>
-  <tr>
-    <td align="center"><strong><code>dart analyze</code></strong><br><br>
-      <img src="screenshots/08-analyze.png" width="420" alt="dart analyze"></td>
-    <td align="center"><strong><code>flutter test</code></strong><br><br>
-      <img src="screenshots/09-test.png" width="420" alt="flutter test"></td>
-  </tr>
-</table>
 
 ## Cara Menjalankan
 

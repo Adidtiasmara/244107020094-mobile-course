@@ -36,43 +36,6 @@ dengan **Riverpod**, lalu ditutup dengan simulasi data asinkron memakai
 - `flutter_riverpod` ^3
 - `flutter_test` untuk unit dan widget test
 
-## Struktur Folder
-
-```text
-03-week-3-navigation-state-management/
-├── week3_navigation/             # Project Praktikum 1 (lihat README-nya)
-│   └── lib/ test/ ...
-├── week3_todo/                   # Project Praktikum 2 & 3 + AI Challenge
-│   └── lib/ test/ ...
-├── test/                         # Salinan test final (untuk portofolio)
-│   ├── todo_provider_test.dart   # Unit test notifier + filter
-│   ├── stats_provider_test.dart  # Unit test sukses & gagal
-│   └── widget_test.dart          # Widget test tambah tugas & navigasi
-├── docs/
-│   └── ai-challenge.md           # Prompt, output AI, perbaikan, hasil test
-├── screenshots/
-└── README.md
-```
-
-> Kode yang dapat dijalankan ada di subfolder `week3_navigation/` dan
-> `week3_todo/` (di-ignore oleh Git). Folder `test/` di root berisi salinan
-> test final untuk dokumentasi portofolio.
-
-## Struktur Project
-
-Folder ini punya README keseluruhan (file ini) dan README tiap project:
-
-- `week3_navigation/` - Praktikum 1 (navigasi GoRouter). Struktur: `lib/`
-  (`main.dart`, `pages/home_page.dart`, `pages/detail_page.dart`) dan `test/`.
-  Cara jalan dan detailnya ada di
-  [`week3_navigation/README.md`](week3_navigation/README.md).
-- `week3_todo/` - Praktikum 2 & 3 + AI Challenge (ToDo + Riverpod). Struktur:
-  `lib/` (`main.dart`, `pages/`, `providers/`, `widgets/`) dan `test/`.
-  Cara jalan dan detailnya ada di
-  [`week3_todo/README.md`](week3_todo/README.md).
-
-Folder `test/` di root adalah salinan test final `week3_todo/` untuk
-dokumentasi portofolio. `screenshots/` dan `docs/` juga berada di root folder.
 
 ## Praktikum 1 - Navigasi dengan GoRouter
 
@@ -138,29 +101,6 @@ keputusan visual, dan hasil test ada di
 3. **Integrasi GoRouter**: `/` untuk daftar tugas, `/produk` untuk produk, dan
    `/stats` untuk statistik, dengan `NavigationBar` untuk berpindah halaman.
 
-## Testing
-
-```bash
-flutter test
-```
-
-Hasil:
-
-```text
-00:00 +0: add, toggle, dan remove menghasilkan state baru
-00:00 +1: filteredTodosProvider mengikuti filter
-00:00 +2: statistik sukses menghitung total, selesai, dan sisa
-00:00 +3: statistik gagal memunculkan AsyncError
-00:00 +4: menambah tugas baru
-00:01 +5: berpindah ke halaman statistik lewat GoRouter
-00:02 +6: All tests passed!
-```
-
-Analisis statis:
-
-```bash
-dart analyze   # No issues found!
-```
 
 ## Cara Menjalankan
 

@@ -39,47 +39,7 @@ menyimpan preferensi dengan `SharedPreferences` dan catatan dengan SQLite
 - `sqflite` ^2 + `path`
 - `dio` ^5
 - `go_router` ^18
-- `sqflite_common_ffi_web` (dukungan web untuk demo/screenshot)
 - `flutter_test` untuk unit dan widget test
-
-## Struktur Folder
-
-```text
-05-week-5-local-storage-offline-first/
-├── week5_offline_notes/        # Project Flutter yang dapat dijalankan
-│   ├── lib/
-│   │   ├── main.dart           # ProviderScope + GoRouter (/ , /settings, /posts, /note/:id)
-│   │   ├── data/
-│   │   │   ├── prefs.dart               # PrefsRepository (SharedPreferences)
-│   │   │   ├── providers.dart           # provider Riverpod + AsyncNotifier
-│   │   │   ├── sync.dart                # syncNotes + cache posts
-│   │   │   ├── api_client.dart          # createDio() terpusat
-│   │   │   ├── network_errors.dart      # friendlyErrorMessage + OfflineException
-│   │   │   ├── local/
-│   │   │   │   ├── db.dart              # openNotesDb() + skema
-│   │   │   │   ├── note.dart            # model Note (dirty flag)
-│   │   │   │   └── notes_database_factory*.dart  # io/web factory
-│   │   │   ├── models/post.dart
-│   │   │   └── repositories/
-│   │   │       ├── note_repository.dart # satu-satunya pintu ke tabel notes
-│   │   │       └── post_repository.dart
-│   │   ├── pages/ (notes_page.dart, settings_page.dart, posts_page.dart, note_detail_page.dart)
-│   │   └── widgets/note_tile.dart       # NoteTile + DirtyBadge
-│   └── test/
-│       ├── note_test.dart      # model + provider dengan repository palsu
-│       ├── widget_test.dart    # NoteTile
-│       └── fakes.dart          # FakeNoteRepository (tanpa SQLite)
-├── lib/                        # Salinan kode final (untuk portofolio)
-├── test/                       # Salinan test final (untuk portofolio)
-├── docs/
-│   └── ai-challenge.md         # Prompt, output AI, verifikasi, keputusan final
-├── screenshots/
-└── README.md
-```
-
-> Kode yang dapat dijalankan ada di subfolder `week5_offline_notes/`
-> (di-ignore oleh Git). Folder `lib/` dan `test/` di root berisi salinan final
-> untuk dokumentasi portofolio, mengikuti konvensi minggu sebelumnya.
 
 ## Alur Data
 
@@ -90,9 +50,6 @@ LocalRepository --sync--> Remote (simulasi) --sukses--> dirty = 0
 Cache: baca lokal dulu, refresh background, simpan
 ```
 
-UI tidak pernah memanggil SQLite/SharedPreferences langsung. Repository mengubah
-exception platform menjadi kegagalan bermakna lewat `friendlyErrorMessage`, dan
-provider mengekspos `AsyncValue` ke UI.
 
 ## 1. Preferensi (SharedPreferences)
 
@@ -191,43 +148,11 @@ data secara diam-diam.
 3. **Halaman detail** `/note/:id` dengan GoRouter membaca dari repository lokal
    (`noteDetailProvider`), bukan dari state halaman list.
 
-## Testing
-
-```bash
-cd week5_offline_notes
-dart analyze
-flutter test
-```
-
-Hasil:
-
-```text
-$ dart analyze
-Analyzing week5_offline_notes...
-No issues found!
-
-$ flutter test
-00:00 +0: test/note_test.dart: fromMap aman terhadap field yang hilang
-00:00 +1: test/note_test.dart: flag dirty bertahan pada serialisasi
-00:00 +2: test/widget_test.dart: NoteTile menampilkan badge belum tersinkron
-00:00 +3: test/note_test.dart: provider sukses dengan repository palsu
-00:00 +4: test/note_test.dart: provider error dengan repository palsu
-00:00 +5: test/note_test.dart: countDirty menghitung catatan belum tersinkron
-00:00 +6: test/widget_test.dart: NoteTile tidak menampilkan badge saat sinkron
-00:00 +7: All tests passed!
-```
-
-<p align="center">
-  <img src="screenshots/12-analyze-test.png" width="300" alt="dart analyze dan flutter test">
-</p>
-
 ## Cara Menjalankan
 
 ```bash
-cd week5_offline_notes
 flutter pub get
 flutter run                 # Android/desktop
-flutter run -d chrome       # Web (butuh sqflite_common_ffi_web)
 ```
 
 Aplikasi membuka **Catatan Offline** (`/`). Ikon cloud membuka halaman Data API
@@ -243,7 +168,7 @@ catatan membuka detail (`/note/:id`).
 | Klaim "real-time" didukung stream? | ✅ | Reaktivitas via Riverpod, bukan asumsi |
 | Estimasi boilerplate masuk akal? | ✅ | `flutter pub add sqflite path` ringan |
 | Test menguji field hilang + repository palsu? | ✅ | `note_test.dart` + `FakeNoteRepository` |
-| `dart analyze` dan `flutter test` lolos | ✅ | Bersih, 7 test lulus |
+| `flutter analyze` dan `flutter test` lolos | ✅ | Bersih, 7 test lulus |
 
 ## Checklist Verifikasi Mandiri
 
@@ -251,7 +176,7 @@ catatan membuka detail (`/note/:id`).
       repository + provider.
 - [x] Aplikasi penuh berfungsi dalam mode pesawat: baca, tambah, hapus catatan.
 - [x] Badge dirty akurat sebelum/sesudah sync; cache posts tampil tanpa internet.
-- [x] `dart analyze` tanpa issue dan semua test lulus.
+- [x] `flutter analyze` tanpa issue dan semua test lulus.
 - [x] Hasil AI diverifikasi dan didokumentasikan pada folder `docs/`.
 
 ## Refleksi

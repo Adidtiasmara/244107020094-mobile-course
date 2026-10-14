@@ -6,7 +6,7 @@ dan bahasa Dart.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
-[![Progress](https://img.shields.io/badge/progres-minggu%201--5%20dari%2016-informational)]()
+[![Progress](https://img.shields.io/badge/progres-minggu%201--6%20dari%2016-informational)]()
 
 ## Identitas
 
@@ -26,7 +26,7 @@ dan bahasa Dart.
 | 03 | Navigation & State Management (Riverpod) | Selesai | [`03-...`](./03-week-3-navigation-state-management/) |
 | 04 | Networking & REST API | Selesai | [`04-...`](./04-week-4-networking-rest-api/) |
 | 05 | Local Storage & Offline-First | Selesai | [`05-...`](./05-week-5-local-storage-offline-first/) |
-| 06 | Authentication, Security & FCM | Belum mulai | [`06-...`](./06-week-6-authentication-security-fcm/) |
+| 06 | Authentication, Security & FCM | Selesai | [`06-...`](./06-week-6-authentication-security-fcm/) |
 | 07 | Clean Architecture | Belum mulai | [`07-...`](./07-week-7-clean-architecture/) |
 | 08 | Mid Project Review & Code Review | Belum mulai | [`08-...`](./08-week-8-mid-project-review/) |
 | 09 | AI-assisted Development / Vibe Coding | Belum mulai | [`09-...`](./09-week-9-ai-assisted-development/) |
@@ -95,6 +95,22 @@ Detail: [`04-.../README.md`](./04-week-4-networking-rest-api/README.md)
 - `dart analyze` bersih dan 7 test lulus (model, provider palsu, widget).
 
 Detail: [`05-.../README.md`](./05-week-5-local-storage-offline-first/README.md)
+
+### Minggu 6 — Authentication, Security & FCM
+- Token access/refresh disimpan di `flutter_secure_storage` (bukan
+  SharedPreferences) melalui `TokenStore`, dan Dio otomatis refresh sekali saat
+  401 lalu retry; refresh mati memaksa login ulang.
+- Guard route GoRouter: belum login selalu diarahkan ke `/login`.
+- Siklus hidup FCM: minta izin, `getToken`, `onTokenRefresh` yang dikirim ke
+  `POST /devices`, dan langganan topik `pengumuman-kampus`.
+- Notifikasi gabungan `notification + data`; klik dari foreground, background,
+  dan terminated semuanya masuk ke `/pengumuman/:id`.
+- Halaman Debug menampilkan token terpotong, rotasi token, dan simulasi tiap
+  app state.
+- `dart analyze` bersih dan 20 test lulus (parsing rute, masking token,
+  repository auth, status login).
+
+Detail: [`06-.../README.md`](./06-week-6-authentication-security-fcm/README.md)
 
 ## Cara Menjalankan
 
