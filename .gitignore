@@ -4,4 +4,13 @@
 03-week-3-navigation-state-management/week3_todo/*
 !03-week-3-navigation-state-management/week3_todo/README.md
 04-week-4-networking-rest-api/week4_api/
-05-week-5-local-storage-offline-first/week5_offline_notes/
+05-week-5-local-storage-offline-first/pubspec.yaml
+05-week-5-local-storage-offline-first/pubspec.lock
+05-week-5-local-storage-offline-first/.metadata
+05-week-5-local-storage-offline-first/analysis_options.yaml
+05-week-5-local-storage-offline-first/.gitignore
+05-week-5-local-storage-offline-first/android/
+05-week-5-local-storage-offline-first/web/
+05-week-5-local-storage-offline-first/build/
+05-week-5-local-storage-offline-first/.dart_tool/
+06-week-6-authentication-security-fcm/campus_notify/
