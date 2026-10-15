@@ -95,11 +95,13 @@ Constructor `NoteRepository({Future<Database> Function()? openDb})` memungkinkan
 test menyuntikkan `FakeNoteRepository` tanpa menyentuh SQLite sungguhan
 (mengikuti contoh modul).
 
-### 4.5 Dukungan web + sqflite FFI
+### 4.5 Database langsung dengan `sqflite`
 
-Agar screenshot dapat diambil di browser (layout mobile), ditambahkan
-conditional import `notes_database_factory_io.dart` / `_web.dart` dan
-`sqflite_common_ffi_web`. Pada Android tetap memakai `sqflite` asli.
+`openNotesDb()` memakai `getDatabasesPath()` + `openDatabase()` langsung dari
+`package:sqflite` (persis contoh modul). Tidak ada conditional import atau
+factory web, sehingga hanya platform dengan SQLite native (Android/iOS/desktop)
+yang didukung. Sebelumnya sempat ditambahkan `sqflite_common_ffi_web` untuk
+menjalankan demo di browser, namun dukungan web dihapus agar kode sesuai modul.
 
 ## 5. Keputusan final
 
@@ -115,12 +117,12 @@ offline-first.
 
 ## 6. Hasil testing
 
-Perintah dan hasil (dijalankan di dalam `week5_offline_notes/`):
+Perintah dan hasil (dijalankan di dalam folder `05-week-5-local-storage-offline-first/`):
 
 ```text
-$ dart analyze
-Analyzing week5_offline_notes...
-No issues found!
+$ flutter analyze
+Analyzing 05-week-5-local-storage-offline-first...
+No issues found! (ran in 3.5s)
 
 $ flutter test
 00:00 +0: test/note_test.dart: fromMap aman terhadap field yang hilang
@@ -133,10 +135,10 @@ $ flutter test
 00:00 +7: All tests passed!
 ```
 
-Catatan: `flutter analyze` tidak dapat dijalankan di environment ini karena
-cache Flutter SDK lokal kehilangan folder `dev/`. Sebagai gantinya dipakai
-`dart analyze` pada package yang sama, yang menganalisis `lib/` dan `test/`
-dengan rules `flutter_lints` yang sama.
+Catatan: sebelumnya `flutter analyze` tidak dapat dijalankan karena cache
+Flutter SDK lokal kehilangan folder `dev/`, sehingga dipakai `dart analyze`.
+Pada environment terbaru `flutter analyze` sudah berjalan normal dan dipakai
+kembali sebagai perintah verifikasi utama (hasil di atas).
 
 ## 7. Keputusan teknis
 

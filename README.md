@@ -27,7 +27,7 @@ dan bahasa Dart.
 | 04 | Networking & REST API | Selesai | [`04-...`](./04-week-4-networking-rest-api/) |
 | 05 | Local Storage & Offline-First | Selesai | [`05-...`](./05-week-5-local-storage-offline-first/) |
 | 06 | Authentication, Security & FCM | Selesai | [`06-...`](./06-week-6-authentication-security-fcm/) |
-| 07 | Clean Architecture | Belum mulai | [`07-...`](./07-week-7-clean-architecture/) |
+| 07 | Clean Architecture | Selesai | [`07-...`](./07-week-7-clean-architecture/) |
 | 08 | Mid Project Review & Code Review | Belum mulai | [`08-...`](./08-week-8-mid-project-review/) |
 | 09 | AI-assisted Development / Vibe Coding | Belum mulai | [`09-...`](./09-week-9-ai-assisted-development/) |
 | 10 | AI Feature Integration | Belum mulai | [`10-...`](./10-week-10-ai-feature-integration/) |
@@ -111,6 +111,16 @@ Detail: [`05-.../README.md`](./05-week-5-local-storage-offline-first/README.md)
   repository auth, status login).
 
 Detail: [`06-.../README.md`](./06-week-6-authentication-security-fcm/README.md)
+
+### Minggu 7 — Clean Architecture
+- Refactor project Minggu 5 menjadi struktur **feature-first**: `lib/features/{notes,posts,settings}/{domain,data,presentation}`.
+- Tiga lapisan terpisah dengan dependency rule mengarah ke dalam; `domain` dan `core` bebas import Flutter/Dio/SQLite (dibuktikan tiga grep sterilitas, nol hasil).
+- Interface repository di `domain`, implementasi di `data`, mapping hanya di `model` (`toMap/fromMap/toEntity`).
+- Use case di `domain` (`GetNotes`, `AddNote`, `SyncNotes`, dst.) diuji dengan repository palsu tanpa SQLite/Dio.
+- Exception mentah dipetakan ke `Failure` yang ramah pengguna sebelum mencapai UI.
+- `flutter analyze` bersih dan 10 test lulus (use case, model, widget).
+
+Detail: [`07-.../README.md`](./07-week-7-clean-architecture/README.md)
 
 ## Cara Menjalankan
 

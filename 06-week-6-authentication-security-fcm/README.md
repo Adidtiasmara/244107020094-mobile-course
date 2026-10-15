@@ -163,14 +163,10 @@ Payload gabungan `notification + data` dipakai untuk semua state:
 }
 ```
 
-Pengujian dilakukan di **perangkat fisik** (Infinix X6833B, Android 14) dengan
+Pengujian dilakukan di **perangkat fisik** dengan
 mengirim pesan dari **Firebase Console → Messaging** ke FCM registration token
 perangkat. Pesan memakai payload gabungan `notification + data` di atas.
 
-| State | Handler | Yang diharapkan | Bukti |
-| :--- | :--- | :--- | :--- |
-| Foreground | `onMessage` | Banner lokal manual muncul, ketukan masuk `/pengumuman/3` | [08-foreground.png](screenshots/08-foreground.png) |
-| Background | `onMessageOpenedApp` | Banner sistem, ketukan masuk `/pengumuman/3` | [09-background.png](screenshots/08-background.png) |
 
 
 > Catatan pengujian: untuk state **terminated**, aplikasi dimatikan lewat
@@ -185,9 +181,7 @@ perangkat. Pesan memakai payload gabungan `notification + data` di atas.
     <td align="center"><strong>Foreground: banner lokal</strong><br><br>
       <img src="screenshots/08-foreground.png" width="220" alt="Foreground"></td>
     <td align="center"><strong>Background: klik notifikasi</strong><br><br>
-      <img src="screenshots/09-background.png" width="220" alt="Background"></td>
-    <td align="center"><strong>Terminated: dibuka dari notifikasi</strong><br><br>
-      <img src="screenshots/10-terminated.png" width="220" alt="Terminated"></td>
+      <img src="screenshots/08-background.png" width="220" alt="Background"></td>
   </tr>
 </table>
 
