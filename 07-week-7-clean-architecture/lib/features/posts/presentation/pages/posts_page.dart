@@ -99,11 +99,16 @@ class _PostsPageState extends ConsumerState<PostsPage> {
                         width: double.infinity,
                         color: Colors.red.shade50,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         child: Row(
                           children: [
-                            Icon(Icons.wifi_off,
-                                size: 16, color: Colors.red.shade800),
+                            Icon(
+                              Icons.wifi_off,
+                              size: 16,
+                              color: Colors.red.shade800,
+                            ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
@@ -124,7 +129,9 @@ class _PostsPageState extends ConsumerState<PostsPage> {
                           ? Colors.blue.shade50
                           : Colors.green.shade50,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: Row(
                         children: [
                           Icon(
@@ -157,7 +164,9 @@ class _PostsPageState extends ConsumerState<PostsPage> {
                           final post = state.posts[index];
                           return Card(
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
                             child: ListTile(
                               leading: CircleAvatar(child: Text('${post.id}')),
                               title: Text(

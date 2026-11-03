@@ -19,9 +19,7 @@ Dio createDio() {
       headers: {'Accept': 'application/json'},
     ),
   );
-  dio.interceptors.add(
-    LogInterceptor(requestBody: true, responseBody: false),
-  );
+  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: false));
   return dio;
 }
 
@@ -35,8 +33,9 @@ class ForceOfflineNotifier extends Notifier<bool> {
   void toggle() => state = !state;
 }
 
-final forceOfflineProvider =
-    NotifierProvider<ForceOfflineNotifier, bool>(ForceOfflineNotifier.new);
+final forceOfflineProvider = NotifierProvider<ForceOfflineNotifier, bool>(
+  ForceOfflineNotifier.new,
+);
 
 /// Memetakan exception jaringan teknis menjadi `NetworkFailure` yang ramah
 /// pengguna (Refactoring Challenge #3). Dipakai lapisan `data` sebelum
@@ -58,9 +57,13 @@ NetworkFailure mapDioError(Object error) {
       );
     case DioExceptionType.badResponse:
       final code = error.response?.statusCode;
-      if (code == 404) return const NetworkFailure('Data tidak ditemukan (404).');
+      if (code == 404) {
+        return const NetworkFailure('Data tidak ditemukan (404).');
+      }
       if (code == 401 || code == 403) {
-        return NetworkFailure('Akses ditolak ($code). Periksa kredensial Anda.');
+        return NetworkFailure(
+          'Akses ditolak ($code). Periksa kredensial Anda.',
+        );
       }
       return NetworkFailure('Server bermasalah ($code). Coba lagi nanti.');
     default:

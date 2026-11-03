@@ -5,12 +5,7 @@ import '../../domain/entities/note.dart';
 
 /// Kartu satu catatan. Menampilkan badge "Belum tersinkron" bila `dirty`.
 class NoteTile extends StatelessWidget {
-  const NoteTile({
-    super.key,
-    required this.note,
-    this.onTap,
-    this.onDelete,
-  });
+  const NoteTile({super.key, required this.note, this.onTap, this.onDelete});
 
   final Note note;
   final VoidCallback? onTap;
@@ -34,11 +29,7 @@ class NoteTile extends StatelessWidget {
           children: [
             if (note.body.isNotEmpty) ...[
               const SizedBox(height: 2),
-              Text(
-                note.body,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Text(note.body, maxLines: 2, overflow: TextOverflow.ellipsis),
             ],
             const SizedBox(height: 6),
             Row(
@@ -81,8 +72,11 @@ class DirtyBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.cloud_upload_outlined,
-              size: 12, color: Colors.orange.shade900),
+          Icon(
+            Icons.cloud_upload_outlined,
+            size: 12,
+            color: Colors.orange.shade900,
+          ),
           const SizedBox(width: 4),
           Text(
             'Belum tersinkron',

@@ -8,10 +8,7 @@ import '../../domain/entities/post.dart';
 import '../../domain/repositories/post_repository.dart';
 
 final postRepositoryProvider = Provider<PostRepository>((ref) {
-  return PostRepositoryImpl(
-    dio: ref.watch(dioProvider),
-    openDb: openNotesDb,
-  );
+  return PostRepositoryImpl(dio: ref.watch(dioProvider), openDb: openNotesDb);
 });
 
 /// State halaman post: daftar, asal data (cache/jaringan), waktu cache, error.
@@ -79,7 +76,10 @@ class PostsNotifier extends AsyncNotifier<PostsState> {
 
   Future<({PostsState? state, Failure? failure})> _fetchAndCache() async {
     if (ref.read(forceOfflineProvider)) {
-      return (state: null, failure: const NetworkFailure('Mode offline aktif.'));
+      return (
+        state: null,
+        failure: const NetworkFailure('Mode offline aktif.'),
+      );
     }
     final result = await ref.read(postRepositoryProvider).fetchPosts();
     if (result.failure != null) {
