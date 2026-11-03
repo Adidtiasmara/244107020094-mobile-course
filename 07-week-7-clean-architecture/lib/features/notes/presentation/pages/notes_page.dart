@@ -22,46 +22,63 @@ class _NotesPageState extends ConsumerState<NotesPage> {
   Future<void> _openAddDialog() async {
     final titleController = TextEditingController();
     final bodyController = TextEditingController();
+    var titleError = false;
     final saved = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Catatan baru'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              autofocus: true,
-              decoration: const InputDecoration(
-                labelText: 'Judul',
-                border: OutlineInputBorder(),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const Text('Catatan baru'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: titleController,
+                autofocus: true,
+                onChanged: (_) {
+                  if (titleError && titleController.text.trim().isNotEmpty) {
+                    setDialogState(() => titleError = false);
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Judul',
+                  border: const OutlineInputBorder(),
+                  errorText: titleError ? 'Judul tidak boleh kosong' : null,
+                ),
               ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: bodyController,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  labelText: 'Isi (opsional)',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Batal'),
             ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: bodyController,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Isi (opsional)',
-                border: OutlineInputBorder(),
-              ),
+            FilledButton(
+              onPressed: () {
+                if (titleController.text.trim().isEmpty) {
+                  setDialogState(() => titleError = true);
+                  return;
+                }
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Simpan'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Batal'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Simpan'),
-          ),
-        ],
       ),
     );
     if (saved == true && titleController.text.trim().isNotEmpty) {
-      await ref.read(notesProvider.notifier).add(
+      await ref
+          .read(notesProvider.notifier)
+          .add(
             title: titleController.text.trim(),
             body: bodyController.text.trim(),
           );
@@ -82,8 +99,8 @@ class _NotesPageState extends ConsumerState<NotesPage> {
           result.failure != null
               ? 'Gagal sinkron: ${result.failure!.message}'
               : result.synced == 0
-                  ? 'Tidak ada catatan yang perlu disinkronkan.'
-                  : '${result.synced} catatan berhasil disinkronkan.',
+              ? 'Tidak ada catatan yang perlu disinkronkan.'
+              : '${result.synced} catatan berhasil disinkronkan.',
         ),
       ),
     );
@@ -120,8 +137,11 @@ class _NotesPageState extends ConsumerState<NotesPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 children: [
-                  Icon(Icons.airplanemode_active,
-                      size: 18, color: Colors.deepOrange.shade800),
+                  Icon(
+                    Icons.airplanemode_active,
+                    size: 18,
+                    color: Colors.deepOrange.shade800,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -180,8 +200,10 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                     children: [
                       const Icon(Icons.error_outline, size: 40),
                       const SizedBox(height: 8),
-                      Text('Gagal memuat catatan: $error',
-                          textAlign: TextAlign.center),
+                      Text(
+                        'Gagal memuat catatan: $error',
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 12),
                       FilledButton(
                         onPressed: () =>
