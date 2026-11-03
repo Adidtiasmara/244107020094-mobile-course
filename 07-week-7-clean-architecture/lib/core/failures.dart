@@ -19,6 +19,11 @@ class NetworkFailure extends Failure {
   const NetworkFailure(super.message);
 }
 
+/// Kegagalan validasi input sebelum data disentuh repository.
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
+
 /// Kegagalan tak terduga yang belum dipetakan ke jenis lain.
 class UnknownFailure extends Failure {
   const UnknownFailure(super.message);

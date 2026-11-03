@@ -20,54 +20,21 @@ class _NotesPageState extends ConsumerState<NotesPage> {
   bool _syncing = false;
 
   Future<void> _openAddDialog() async {
-    final titleController = TextEditingController();
-    final bodyController = TextEditingController();
-    final saved = await showDialog<bool>(
+    final draft = await showDialog<({String title, String body})>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Catatan baru'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              autofocus: true,
-              decoration: const InputDecoration(
-                labelText: 'Judul',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: bodyController,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Isi (opsional)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Batal'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Simpan'),
-          ),
-        ],
-      ),
+      builder: (_) => const _AddNoteDialog(),
     );
-    if (saved == true && titleController.text.trim().isNotEmpty) {
-      await ref.read(notesProvider.notifier).add(
-            title: titleController.text.trim(),
-            body: bodyController.text.trim(),
-          );
+    if (draft == null) return;
+    final result = await ref
+        .read(notesProvider.notifier)
+        .add(title: draft.title, body: draft.body);
+    if (!mounted) return;
+    final failure = result.failure;
+    if (failure != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal menyimpan catatan: ${failure.message}')),
+      );
     }
-    titleController.dispose();
-    bodyController.dispose();
   }
 
   Future<void> _sync() async {
@@ -82,8 +49,8 @@ class _NotesPageState extends ConsumerState<NotesPage> {
           result.failure != null
               ? 'Gagal sinkron: ${result.failure!.message}'
               : result.synced == 0
-                  ? 'Tidak ada catatan yang perlu disinkronkan.'
-                  : '${result.synced} catatan berhasil disinkronkan.',
+              ? 'Tidak ada catatan yang perlu disinkronkan.'
+              : '${result.synced} catatan berhasil disinkronkan.',
         ),
       ),
     );
@@ -120,8 +87,11 @@ class _NotesPageState extends ConsumerState<NotesPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 children: [
-                  Icon(Icons.airplanemode_active,
-                      size: 18, color: Colors.deepOrange.shade800),
+                  Icon(
+                    Icons.airplanemode_active,
+                    size: 18,
+                    color: Colors.deepOrange.shade800,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -180,8 +150,10 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                     children: [
                       const Icon(Icons.error_outline, size: 40),
                       const SizedBox(height: 8),
-                      Text('Gagal memuat catatan: $error',
-                          textAlign: TextAlign.center),
+                      Text(
+                        'Gagal memuat catatan: $error',
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 12),
                       FilledButton(
                         onPressed: () =>
@@ -226,6 +198,84 @@ class _NotesPageState extends ConsumerState<NotesPage> {
         icon: const Icon(Icons.add),
         label: const Text('Catatan'),
       ),
+    );
+  }
+}
+
+/// Dialog tambah catatan.
+///
+/// Controller hidup bersama widget dialog ini dan dibuang di `dispose()`,
+/// jadi tidak ada controller yang dipakai setelah dibuang saat animasi tutup.
+/// Hasil dikembalikan sebagai record `({String title, String body})`.
+class _AddNoteDialog extends StatefulWidget {
+  const _AddNoteDialog();
+
+  @override
+  State<_AddNoteDialog> createState() => _AddNoteDialogState();
+}
+
+class _AddNoteDialogState extends State<_AddNoteDialog> {
+  final _titleController = TextEditingController();
+  final _bodyController = TextEditingController();
+  bool _titleError = false;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _bodyController.dispose();
+    super.dispose();
+  }
+
+  void _save() {
+    final title = _titleController.text.trim();
+    if (title.isEmpty) {
+      setState(() => _titleError = true);
+      return;
+    }
+    Navigator.of(
+      context,
+    ).pop((title: title, body: _bodyController.text.trim()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Catatan baru'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _titleController,
+            autofocus: true,
+            onChanged: (_) {
+              if (_titleError && _titleController.text.trim().isNotEmpty) {
+                setState(() => _titleError = false);
+              }
+            },
+            decoration: InputDecoration(
+              labelText: 'Judul',
+              border: const OutlineInputBorder(),
+              errorText: _titleError ? 'Judul tidak boleh kosong' : null,
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _bodyController,
+            maxLines: 3,
+            decoration: const InputDecoration(
+              labelText: 'Isi (opsional)',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Batal'),
+        ),
+        FilledButton(onPressed: _save, child: const Text('Simpan')),
+      ],
     );
   }
 }
