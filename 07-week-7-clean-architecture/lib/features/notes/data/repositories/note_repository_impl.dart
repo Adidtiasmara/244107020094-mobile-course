@@ -21,8 +21,9 @@ class NoteRepositoryImpl implements NoteRepository {
     try {
       final db = await openDb();
       final rows = await db.query('notes', orderBy: 'updated_at DESC');
-      final notes =
-          rows.map((row) => NoteModel.fromMap(row).toEntity()).toList();
+      final notes = rows
+          .map((row) => NoteModel.fromMap(row).toEntity())
+          .toList();
       return (notes: notes, failure: null);
     } catch (e) {
       return (
@@ -89,8 +90,9 @@ class NoteRepositoryImpl implements NoteRepository {
   Future<({int count, Failure? failure})> countDirty() async {
     try {
       final db = await openDb();
-      final rows =
-          await db.rawQuery('SELECT COUNT(*) AS c FROM notes WHERE dirty = 1');
+      final rows = await db.rawQuery(
+        'SELECT COUNT(*) AS c FROM notes WHERE dirty = 1',
+      );
       return (count: (rows.first['c'] as num?)?.toInt() ?? 0, failure: null);
     } catch (e) {
       return (count: 0, failure: LocalFailure('Gagal menghitung catatan: $e'));

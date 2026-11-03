@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/failures.dart';
 import '../../../../infra/database.dart';
 import '../../data/repositories/note_repository_impl.dart';
 import '../../domain/entities/note.dart';
@@ -62,9 +63,22 @@ class NotesNotifier extends AsyncNotifier<List<Note>> {
     });
   }
 
-  Future<void> add({required String title, String body = ''}) async {
-    await ref.read(addNoteProvider).call(title: title, body: body);
+  /// Simpan catatan lalu muat ulang daftar.
+  ///
+  /// Hasil use case diteruskan ke pemanggil: kalau gagal (mis. SQLite error),
+  /// daftar tidak perlu dimuat ulang dan UI menampilkan pesan gagal.
+  Future<({Note? note, Failure? failure})> add({
+    required String title,
+    String body = '',
+  }) async {
+    final result = await ref
+        .read(addNoteProvider)
+        .call(title: title, body: body);
+    if (result.failure != null) {
+      return result;
+    }
     await refresh();
+    return result;
   }
 
   Future<void> remove(int id) async {
