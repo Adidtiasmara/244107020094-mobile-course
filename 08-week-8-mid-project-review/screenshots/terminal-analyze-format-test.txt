@@ -1,0 +1,9 @@
+$ flutter analyze
+Analyzing 07-week-7-clean-architecture...                       
+No issues found! (ran in 9.8s)
+
+$ dart format --output=none --set-exit-if-changed .
+All 36 files already formatted.
+
+$ flutter test
+00:04 +15: All tests passed!
