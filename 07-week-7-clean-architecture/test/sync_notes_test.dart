@@ -13,13 +13,15 @@ void main() {
     expect(repo.markedSynced, isTrue);
   });
 
-  test('SyncNotes tidak menyentuh server saat tidak ada catatan dirty',
-      () async {
-    final repo = FakeNoteRepository(dirtyCount: 0);
-    final result = await SyncNotes(repo).call();
-    expect(result.synced, 0);
-    expect(repo.markedSynced, isFalse);
-  });
+  test(
+    'SyncNotes tidak menyentuh server saat tidak ada catatan dirty',
+    () async {
+      final repo = FakeNoteRepository(dirtyCount: 0);
+      final result = await SyncNotes(repo).call();
+      expect(result.synced, 0);
+      expect(repo.markedSynced, isFalse);
+    },
+  );
 
   test('SyncNotes meneruskan failure tanpa melempar', () async {
     final repo = FakeNoteRepository(fail: true);
