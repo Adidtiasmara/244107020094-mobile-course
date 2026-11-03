@@ -11,10 +11,7 @@ import '../models/post_model.dart';
 
 /// Implementasi `PostRepository`: ambil dari Dio, cache ke SQLite.
 class PostRepositoryImpl implements PostRepository {
-  PostRepositoryImpl({
-    required this.dio,
-    required this.openDb,
-  });
+  PostRepositoryImpl({required this.dio, required this.openDb});
 
   final Dio dio;
   final Future<Database> Function() openDb;
@@ -36,7 +33,7 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<({List<Post> posts, DateTime? cachedAt, Failure? failure})>
-      readCached() async {
+  readCached() async {
     try {
       final db = await openDb();
       final rows = await db.query('cached_posts', orderBy: 'id ASC');
@@ -45,8 +42,9 @@ class PostRepositoryImpl implements PostRepository {
             final payload = row['payload'] as String? ?? '{}';
             final decoded = jsonDecode(payload);
             if (decoded is Map) {
-              return PostModel.fromJson(decoded.cast<String, Object?>())
-                  .toEntity();
+              return PostModel.fromJson(
+                decoded.cast<String, Object?>(),
+              ).toEntity();
             }
             return null;
           })

@@ -69,3 +69,34 @@ class FakeNoteRepository implements NoteRepository {
     return (failure: null);
   }
 }
+
+/// Fake yang mencatat setiap pemanggilan `addNote`.
+///
+/// Dipakai untuk membuktikan validasi judul ditolak di use case SEBELUM
+/// repository tersentuh. Catatan yang ditambahkan ikut dikembalikan oleh
+/// `fetchNotes` sehingga alur simpan-ke-daftar bisa diuji sampai UI.
+class RecordingNoteRepository extends FakeNoteRepository {
+  int addCalls = 0;
+  final List<Note> addedNotes = [];
+
+  @override
+  Future<({List<Note> notes, Failure? failure})> fetchNotes() async {
+    return (notes: [...items, ...addedNotes], failure: null);
+  }
+
+  @override
+  Future<({Note? note, Failure? failure})> addNote({
+    required String title,
+    String body = '',
+  }) async {
+    addCalls++;
+    final note = Note(
+      title: title,
+      body: body,
+      updatedAt: DateTime(2026, 11, 3),
+      dirty: true,
+    );
+    addedNotes.add(note);
+    return (note: note, failure: null);
+  }
+}

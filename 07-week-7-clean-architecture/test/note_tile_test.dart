@@ -4,8 +4,9 @@ import 'package:week7_clean_notes/features/notes/domain/entities/note.dart';
 import 'package:week7_clean_notes/features/notes/presentation/widgets/note_tile.dart';
 
 void main() {
-  testWidgets('NoteTile menampilkan badge belum tersinkron saat dirty',
-      (tester) async {
+  testWidgets('NoteTile menampilkan badge belum tersinkron saat dirty', (
+    tester,
+  ) async {
     final note = Note(
       id: 1,
       title: 'Catatan uji',
@@ -15,7 +16,9 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MaterialApp(home: Scaffold(body: NoteTile(note: note))),
+      MaterialApp(
+        home: Scaffold(body: NoteTile(note: note)),
+      ),
     );
 
     expect(find.text('Catatan uji'), findsOneWidget);
@@ -23,8 +26,9 @@ void main() {
     expect(find.text('Belum tersinkron'), findsOneWidget);
   });
 
-  testWidgets('NoteTile tidak menampilkan badge saat sudah sinkron',
-      (tester) async {
+  testWidgets('NoteTile tidak menampilkan badge saat sudah sinkron', (
+    tester,
+  ) async {
     final note = Note(
       id: 2,
       title: 'Sudah sinkron',
@@ -32,7 +36,9 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MaterialApp(home: Scaffold(body: NoteTile(note: note))),
+      MaterialApp(
+        home: Scaffold(body: NoteTile(note: note)),
+      ),
     );
 
     expect(find.text('Belum tersinkron'), findsNothing);

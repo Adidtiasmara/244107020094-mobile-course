@@ -31,10 +31,7 @@ class CleanNotesApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Week 7 - Clean Architecture',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.indigo,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
       darkTheme: ThemeData(
         colorSchemeSeed: Colors.indigo,
         brightness: Brightness.dark,

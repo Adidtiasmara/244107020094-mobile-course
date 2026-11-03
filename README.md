@@ -6,7 +6,7 @@ dan bahasa Dart.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
-[![Progress](https://img.shields.io/badge/progres-minggu%201--6%20dari%2016-informational)]()
+[![Progress](https://img.shields.io/badge/progres-minggu%201--8%20dari%2016-informational)]()
 
 ## Identitas
 
@@ -28,7 +28,7 @@ dan bahasa Dart.
 | 05 | Local Storage & Offline-First | Selesai | [`05-...`](./05-week-5-local-storage-offline-first/) |
 | 06 | Authentication, Security & FCM | Selesai | [`06-...`](./06-week-6-authentication-security-fcm/) |
 | 07 | Clean Architecture | Selesai | [`07-...`](./07-week-7-clean-architecture/) |
-| 08 | Mid Project Review & Code Review | Belum mulai | [`08-...`](./08-week-8-mid-project-review/) |
+| 08 | Mid Project Review & Code Review | PR menunggu review | [`08-...`](./08-week-8-mid-project-review/) |
 | 09 | AI-assisted Development / Vibe Coding | Belum mulai | [`09-...`](./09-week-9-ai-assisted-development/) |
 | 10 | AI Feature Integration | Belum mulai | [`10-...`](./10-week-10-ai-feature-integration/) |
 | 11 | Performance Optimization | Belum mulai | [`11-...`](./11-week-11-performance-optimization/) |
@@ -122,18 +122,42 @@ Detail: [`06-.../README.md`](./06-week-6-authentication-security-fcm/README.md)
 
 Detail: [`07-.../README.md`](./07-week-7-clean-architecture/README.md)
 
+### Minggu 8 — Mid Project Review & Code Review
+- Audit riwayat Git: 33 commit semuanya langsung ke `main`; tabel perbaikan
+  pesan commit (before/after) di `08-.../docs/review-checklist.md`.
+- Alur GitFlow pertama kali: branch `develop`, tiga PR kecil dengan template
+  (Masalah / Solusi / Cara uji / Screenshot) yang di-review lalu di-merge.
+- Perbaikan hasil review: validasi judul kosong pindah ke use case `AddNote`
+  (domain), gagal simpan tampil sebagai SnackBar, dialog dibuat StatefulWidget
+  agar controller tidak dipakai setelah di-dispose. Tambah 5 test (3 unit + 2
+  widget), total 15 lulus.
+- AI review challenge: 5 temuan AI diverifikasi — 3 diterima dengan bukti
+  (grep/test/commit), 2 ditolak dengan alasan teknis; tercatat di
+  `08-.../docs/ai-review-vs-keputusan.md`.
+- Proyek Minggu 7 kini bisa di-build dari clone baru (pubspec tidak lagi
+  di-ignore) dan punya CI GitHub Actions (format + analyze + test per PR).
+
+Detail: [`08-.../README.md`](./08-week-8-mid-project-review/README.md)
+
 ## Cara Menjalankan
 
 1. Cek kesiapan environment:
    ```bash
    flutter doctor
+   ```
 2. Masuk ke direktori proyek minggu yang dituju (contoh minggu 3):
-cd 03-week-3-navigation-state-management/week3_todo
+   ```bash
+   cd 03-week-3-navigation-state-management/week3_todo
+   ```
 3. Pasang dependensi lalu jalankan:
-flutter pub get
-flutter run
-Referensi
-- Modul Praktikum: Codelabs Pemrograman Mobile JTI Polinema (https://jti-polinema.github.io/flutter-codelab/)
-- Dokumentasi Flutter (https://docs.flutter.dev/) · Panduan Dart (https://dart.dev/guides) · Riverpod (https://riverpod.dev/docs)
+   ```bash
+   flutter pub get
+   flutter run
+   ```
+
+## Referensi
+
+- Modul Praktikum: [Codelabs Pemrograman Mobile JTI Polinema](https://jti-polinema.github.io/flutter-codelab/)
+- [Dokumentasi Flutter](https://docs.flutter.dev/) · [Panduan Dart](https://dart.dev/guides) · [Riverpod](https://riverpod.dev/docs)
 
 ---

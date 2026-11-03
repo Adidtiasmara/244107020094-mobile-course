@@ -19,11 +19,11 @@ class PostModel extends Post {
   }
 
   Map<String, Object?> toJson() => {
-        'id': id,
-        'userId': userId,
-        'title': title,
-        'body': body,
-      };
+    'id': id,
+    'userId': userId,
+    'title': title,
+    'body': body,
+  };
 
   Post toEntity() => Post(id: id, userId: userId, title: title, body: body);
 }

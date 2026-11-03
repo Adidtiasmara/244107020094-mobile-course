@@ -29,5 +29,6 @@ class DarkModeNotifier extends AsyncNotifier<bool> {
   }
 }
 
-final darkModeProvider =
-    AsyncNotifierProvider<DarkModeNotifier, bool>(DarkModeNotifier.new);
+final darkModeProvider = AsyncNotifierProvider<DarkModeNotifier, bool>(
+  DarkModeNotifier.new,
+);
