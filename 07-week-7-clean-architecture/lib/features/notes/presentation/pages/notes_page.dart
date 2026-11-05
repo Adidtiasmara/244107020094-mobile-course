@@ -4,21 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../infra/network.dart';
 import '../../../../routes.dart';
-import '../../domain/entities/note.dart';
 import '../providers/notes_providers.dart';
 import '../widgets/note_tile.dart';
 
-/// Filter catatan berdasarkan kata kunci pada judul.
-List<Note> filterNotes(List<Note> notes, String query) {
-  if (query.isEmpty) return notes;
-  final keyword = query.toLowerCase();
-  return notes
-      .where((note) => note.title.toLowerCase().contains(keyword))
-      .toList();
-}
-
 /// Halaman daftar catatan. Hanya membaca state dari provider; tidak menyentuh
-/// SQLite, Dio, JSON, atau formatting tanggal secara langsung.
+/// SQLite, Dio, JSON, atau formatting tanggal secara langsung. Aturan pencarian
+/// hidup di use case `SearchNotes` (domain), bukan di sini.
 class NotesPage extends ConsumerStatefulWidget {
   const NotesPage({super.key});
 
@@ -28,7 +19,13 @@ class NotesPage extends ConsumerStatefulWidget {
 
 class _NotesPageState extends ConsumerState<NotesPage> {
   bool _syncing = false;
-  String _query = '';
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   Future<void> _openAddDialog() async {
     final draft = await showDialog<({String title, String body})>(
@@ -72,6 +69,8 @@ class _NotesPageState extends ConsumerState<NotesPage> {
     final notes = ref.watch(notesProvider);
     final offline = ref.watch(forceOfflineProvider);
     final dirtyCount = ref.watch(dirtyCountProvider).value ?? 0;
+    final query = ref.watch(noteQueryProvider);
+    final search = ref.watch(searchNotesProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -152,7 +151,9 @@ class _NotesPageState extends ConsumerState<NotesPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: TextField(
-              onChanged: (value) => setState(() => _query = value),
+              controller: _searchController,
+              onChanged: (value) =>
+                  ref.read(noteQueryProvider.notifier).update(value),
               decoration: const InputDecoration(
                 hintText: 'Cari judul catatan...',
                 prefixIcon: Icon(Icons.search),
@@ -193,11 +194,22 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                     child: Text('Belum ada catatan. Tekan + untuk menambah.'),
                   );
                 }
-                final results = filterNotes(items, _query);
+                final results = search.call(notes: items, query: query);
                 if (results.isEmpty) {
                   return Center(
-                    child: Text(
-                      'Catatan dengan judul "$_query" tidak ditemukan.',
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Tidak ada catatan dengan judul "$query".'),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () {
+                            _searchController.clear();
+                            ref.read(noteQueryProvider.notifier).clear();
+                          },
+                          child: const Text('Hapus pencarian'),
+                        ),
+                      ],
                     ),
                   );
                 }

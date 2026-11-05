@@ -9,6 +9,7 @@ import '../../domain/usecases/add_note.dart';
 import '../../domain/usecases/delete_note.dart';
 import '../../domain/usecases/get_note.dart';
 import '../../domain/usecases/get_notes.dart';
+import '../../domain/usecases/search_notes.dart';
 import '../../domain/usecases/sync_notes.dart';
 
 /// Satu-satunya tempat wiring fitur `notes` (dependency injection).
@@ -40,6 +41,24 @@ final deleteNoteProvider = Provider<DeleteNote>((ref) {
 final syncNotesProvider = Provider<SyncNotes>((ref) {
   return SyncNotes(ref.watch(noteRepositoryProvider));
 });
+
+final searchNotesProvider = Provider<SearchNotes>((ref) {
+  return const SearchNotes();
+});
+
+/// Kata kunci pencarian judul catatan.
+class NoteQueryNotifier extends Notifier<String> {
+  @override
+  String build() => '';
+
+  void update(String value) => state = value;
+
+  void clear() => state = '';
+}
+
+final noteQueryProvider = NotifierProvider<NoteQueryNotifier, String>(
+  NoteQueryNotifier.new,
+);
 
 /// State daftar catatan untuk UI.
 class NotesNotifier extends AsyncNotifier<List<Note>> {

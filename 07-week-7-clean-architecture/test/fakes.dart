@@ -76,6 +76,8 @@ class FakeNoteRepository implements NoteRepository {
 /// repository tersentuh. Catatan yang ditambahkan ikut dikembalikan oleh
 /// `fetchNotes` sehingga alur simpan-ke-daftar bisa diuji sampai UI.
 class RecordingNoteRepository extends FakeNoteRepository {
+  RecordingNoteRepository({super.items});
+
   int addCalls = 0;
   final List<Note> addedNotes = [];
 
