@@ -22,4 +22,9 @@ void main() {
   test('filterNotes tanpa hasil mengembalikan list kosong', () {
     expect(filterNotes(sample(), 'zzz-tidak-ada'), isEmpty);
   });
+
+  test('filterNotes mengabaikan huruf besar/kecil', () {
+    final results = filterNotes(sample(), 'belajar');
+    expect(results, hasLength(2));
+  });
 }

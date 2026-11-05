@@ -11,7 +11,10 @@ import '../widgets/note_tile.dart';
 /// Filter catatan berdasarkan kata kunci pada judul.
 List<Note> filterNotes(List<Note> notes, String query) {
   if (query.isEmpty) return notes;
-  return notes.where((note) => note.title.contains(query)).toList();
+  final keyword = query.toLowerCase();
+  return notes
+      .where((note) => note.title.toLowerCase().contains(keyword))
+      .toList();
 }
 
 /// Halaman daftar catatan. Hanya membaca state dari provider; tidak menyentuh
