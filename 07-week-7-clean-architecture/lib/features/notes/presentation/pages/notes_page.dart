@@ -4,8 +4,15 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../infra/network.dart';
 import '../../../../routes.dart';
+import '../../domain/entities/note.dart';
 import '../providers/notes_providers.dart';
 import '../widgets/note_tile.dart';
+
+/// Filter catatan berdasarkan kata kunci pada judul.
+List<Note> filterNotes(List<Note> notes, String query) {
+  if (query.isEmpty) return notes;
+  return notes.where((note) => note.title.contains(query)).toList();
+}
 
 /// Halaman daftar catatan. Hanya membaca state dari provider; tidak menyentuh
 /// SQLite, Dio, JSON, atau formatting tanggal secara langsung.
@@ -18,6 +25,7 @@ class NotesPage extends ConsumerStatefulWidget {
 
 class _NotesPageState extends ConsumerState<NotesPage> {
   bool _syncing = false;
+  String _query = '';
 
   Future<void> _openAddDialog() async {
     final draft = await showDialog<({String title, String body})>(
@@ -138,6 +146,18 @@ class _NotesPageState extends ConsumerState<NotesPage> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: TextField(
+              onChanged: (value) => setState(() => _query = value),
+              decoration: const InputDecoration(
+                hintText: 'Cari judul catatan...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+            ),
+          ),
           const Divider(height: 1),
           Expanded(
             child: notes.when(
@@ -170,11 +190,19 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                     child: Text('Belum ada catatan. Tekan + untuk menambah.'),
                   );
                 }
+                final results = filterNotes(items, _query);
+                if (results.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Catatan dengan judul "$_query" tidak ditemukan.',
+                    ),
+                  );
+                }
                 return ListView.builder(
                   padding: const EdgeInsets.only(bottom: 88),
-                  itemCount: items.length,
+                  itemCount: results.length,
                   itemBuilder: (context, index) {
-                    final note = items[index];
+                    final note = results[index];
                     return NoteTile(
                       note: note,
                       onTap: () => context.go(AppRoutes.noteDetail(note.id!)),
