@@ -32,6 +32,10 @@ void main() {
     expect(search.call(notes: sample(), query: ''), hasLength(3));
   });
 
+  test('SearchNotes query spasi mengembalikan semua catatan', () {
+    expect(search.call(notes: sample(), query: '   '), hasLength(3));
+  });
+
   test('SearchNotes tanpa hasil mengembalikan list kosong', () {
     expect(search.call(notes: sample(), query: 'zzz-tidak-ada'), isEmpty);
   });

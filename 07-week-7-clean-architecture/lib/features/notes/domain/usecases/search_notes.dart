@@ -9,8 +9,8 @@ class SearchNotes {
   const SearchNotes();
 
   List<Note> call({required List<Note> notes, required String query}) {
-    if (query.isEmpty) return notes;
-    final keyword = query.toLowerCase();
+    final keyword = query.trim().toLowerCase();
+    if (keyword.isEmpty) return notes;
     return notes
         .where((note) => note.title.toLowerCase().contains(keyword))
         .toList();
