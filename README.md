@@ -6,7 +6,7 @@ dan bahasa Dart.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
-[![Progress](https://img.shields.io/badge/progres-minggu%201--8%20dari%2016-informational)]()
+[![Progress](https://img.shields.io/badge/progres-minggu%201--9%20dari%2016-informational)]()
 
 ## Identitas
 
@@ -29,7 +29,7 @@ dan bahasa Dart.
 | 06 | Authentication, Security & FCM | Selesai | [`06-...`](./06-week-6-authentication-security-fcm/) |
 | 07 | Clean Architecture | Selesai | [`07-...`](./07-week-7-clean-architecture/) |
 | 08 | Mid Project Review & Code Review | PR menunggu review | [`08-...`](./08-week-8-mid-project-review/) |
-| 09 | AI-assisted Development / Vibe Coding | Belum mulai | [`09-...`](./09-week-9-ai-assisted-development/) |
+| 09 | AI-assisted Development / Vibe Coding | PR menunggu review | [`09-...`](./09-week-9-ai-assisted-development/) |
 | 10 | AI Feature Integration | Belum mulai | [`10-...`](./10-week-10-ai-feature-integration/) |
 | 11 | Performance Optimization | Belum mulai | [`11-...`](./11-week-11-performance-optimization/) |
 | 12 | Testing & Quality Assurance | Belum mulai | [`12-...`](./12-week-12-testing-quality-assurance/) |
@@ -138,6 +138,21 @@ Detail: [`07-.../README.md`](./07-week-7-clean-architecture/README.md)
   di-ignore) dan punya CI GitHub Actions (format + analyze + test per PR).
 
 Detail: [`08-.../README.md`](./08-week-8-mid-project-review/README.md)
+
+### Minggu 9 — AI-Assisted Development / Vibe Coding
+- Fitur **pencarian judul catatan + empty state** lewat siklus wajib modul:
+  prompt 5 slot → generate → verify → test → refactor → explain.
+- Output mentah AI disimpan apa adanya di `09-.../docs/ai-log.md` (§2, commit
+  `1436242`); verifikasi menemukan **bug case-sensitive** yang dibuktikan lewat
+  red test (`screenshots/terminal-red-test.txt`) lalu diperbaiki (`5310c73`).
+- Refactor: logika pencarian pindah ke use case `SearchNotes` di domain (murni
+  Dart, grep sterilitas tetap nol), query jadi provider Riverpod (`c53ea06`).
+- AI Prompt Challenge: 3 temuan → 1 diterima (query spasi, fix `8e84e14` via red
+  test kedua), 2 ditolak beralasan teknis — `docs/ai-review-vs-keputusan.md`.
+- `flutter analyze` bersih, `dart format` rapi, 21 test lulus (4 unit
+  `SearchNotes` + 1 widget test empty state baru).
+
+Detail: [`09-.../README.md`](./09-week-9-ai-assisted-development/README.md)
 
 ## Cara Menjalankan
 
